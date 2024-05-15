@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#SBATCH --time=<%= resources$walltime %>
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=<%= resources$ncpus %>
+#SBATCH --mem=16G
+#SBATCH -o log/%x_%j.out
+#SBATCH --mail-user=nicolas.klutchnikoff@univ-rennes2.fr
+#SBATCH --mail-type=ALL
+#SBATCH --output=message/%x_%j-result.txt
+#SBATCH --error=message/%x_%j-error.txt
+
+
+## Run R:
+module load StdEnv/2023 r/4.3.1
+Rscript -e 'batchtools::doJobCollection("<%= uri %>")'
